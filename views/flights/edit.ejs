@@ -1,0 +1,10 @@
+<%- include('../partials/header') %>
+
+    <h2>Edit Flight</h2>
+    <!--ACTION defines PATH of HTTP REQ-->
+    <form action="/flights/<%= flight.id %>?_method=PUT" method="POST">
+        <!--NAME defines PROPERTY in REQ.BODY-->
+        <button type="submit">Update Skill</button>
+    </form>
+
+    <%- include('../partials/footer') %>
