@@ -1,33 +1,38 @@
 <%- include('../partials/header') %>
 
-    <h1>Flight List</h1>
-    <table>
-        <thead>
+    <% if (flights.length > 0) { %>
+        <table style="width:100%">
             <tr>
                 <th>Airline</th>
-                <th>Airport</th>
                 <th>Flight #</th>
-                <th>Departs</th>
+                <th>Departing</th>
+                <th>Airport</th>
             </tr>
-        </thead>
-        <tbody>
-            <% flights.forEach(function(f) { %>
+            <% flights.forEach(function(flight) { %>
                 <tr>
                     <td>
-                        <%= f.airline %>
+                        <%= flight.airline %>
                     </td>
                     <td>
-                        <%= f.airport %>
+                        <%= flight.flightNo %>
                     </td>
                     <td>
-                        <%= f.flightNo %>
+                        <%= flight.departs %>
                     </td>
                     <td>
-                        <%= f.departs %>
+                        <%= flight.airport %>
+                    </td>
+                    <!-- <td><%= new Date(flight.createdAt).toDateString() %></td> -->
+                    <td><a href="/flights/<%=flight._id%>">Details</a></td>
+                    <td>
+                        <form action="/flights/<%=flight._id%>?_method=DELETE" method="POST">
+                            <button type="submit">X</button>
+                        </form>
                     </td>
                 </tr>
-                <% }); %>
-        </tbody>
-    </table>
-
-    <%- include('../partials/footer') %>
+                <%})%>
+        </table>
+        <% } else {%>
+            <h1>No Flights Available Yet</h1>
+            <% } %>
+                <%- include('../partials/footer') %>

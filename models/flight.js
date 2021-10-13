@@ -1,61 +1,44 @@
 const mongoose = require('mongoose');
-// shortcut variable
 const Schema = mongoose.Schema;
 
-const flightSchema = new Schema({
-    airline: {
-        type: String,
-        enum: ['American', 'Southwest', 'United', ]
-    },
+let destinationSchema = new Schema({
     airport: {
         type: String,
-        enum: ['AUS', 'DFW', 'DEN', 'LAX', 'SAN', ],
-        default: 'DEN',
+        enum: ['AUS', 'DAL', 'LAX', 'SAN', 'SEA']
+    },
+    arrival: {
+        type: Date
+    }
+}, {
+    timestamps: true
+})
+
+let flightSchema = new Schema({
+    airline: {
+        type: String,
+        enum: ['American', 'Southwest', 'United'],
     },
     flightNo: {
         type: Number,
-        minLength: 10,
-        maxLength: 9999,
+        required: true,
+        min: 10,
+        max: 9999
     },
     departs: {
         type: Date,
         default: function() {
-            return new Date().getFullYear();
+            let oneYearFromNow = new Date();
+            return oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
         }
-    }
-});
+    },
+    airport: {
+        type: String,
+        enum: ['AUS', 'DAL', 'LAX', 'SAN', 'SEA'],
+        default: 'SAN'
+    },
+    destinations: [destinationSchema],
+}, {
+    timestamps: true
+})
 
-module.exports = {
-    getAll,
-    getOne,
-    create,
-    deleteOne,
-    update
-};
-
-function update(id, updatedFlight) {
-    id = parseInt(id);
-    const flight = flights.find(flight => flight.id === id);
-    Object.assign(flight, updatedFlight);
-}
-
-function deleteOne(id) {
-    id = parseInt(id);
-    const idx = flights.findIndex(flight => flight.id === id);
-    flights.splice(idx, 1);
-}
-
-function create(flight) {
-    flights.push(flight);
-}
-
-function getOne(id) {
-    id = parseInt(id);
-    return flights.find(flight => flight.id === id);
-}
-
-function getAll() {
-    return flights;
-}
-
-module.exports = mongoose.model('Flight', flightSchema)
+module.exports = mongoose.model('Flight', flightSchema);
