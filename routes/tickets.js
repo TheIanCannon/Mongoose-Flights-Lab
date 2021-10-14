@@ -1,7 +1,6 @@
 var express = require('express');
-// const { route } = require('.');
 var router = express.Router();
-const ticketsCtrl = require('../controllers/tickets.js');
+const ticketsCtrl = require('../controllers/tickets');
 
 // GET tickets info
 router.get('/flights/:id/tickets/new', ticketsCtrl.new);

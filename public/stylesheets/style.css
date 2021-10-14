@@ -3,6 +3,10 @@ body {
     font: 15px "Noto Sans Display";
 }
 
+nav {
+    background-color: silver;
+}
+
 a {
     color: #032f80;
 }
